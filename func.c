@@ -31,7 +31,7 @@ void Free_Tree(tree *tree) {
 }
 
 
-// Рекурсивная функция вывода дерева (инфиксный обход)
+//  Рекурсивная функция вывода дерева по возрастанию 
 void Print_Tree(tree *p) {
 	if (p != NULL) {
 		Print_Tree(p->left);  // Рекурсивный обход левого поддерева
@@ -39,12 +39,20 @@ void Print_Tree(tree *p) {
 		Print_Tree(p->right);  // Рекурсивный обход правого поддерева 
 	}
 }
-// Рекурсивная функция вывода дерева (постфиксный обход)
+// Рекурсивная функция вывода дерева по убыванию
 void Print_Reverse_Tree(tree *p) {
 	if (p != NULL) {
 
 		Print_Reverse_Tree(p->right);  // Рекурсивный обход правого поддерева 
 		printf("(%d) %s ", p->count, p->word);  // Вывод сожержимого узла
+		Print_Reverse_Tree(p->left);  // Рекурсивный обход левого поддерева
+	}
+}
+// Рекурсивная функция вывода дерева при прямом обходе
+void Print_Straight(tree *p) {
+	if (p != NULL) {
+		printf("(%d) %s ", p->count, p->word);  // Вывод сожержимого узла
+		Print_Reverse_Tree(p->right);  // Рекурсивный обход правого поддерева 
 		Print_Reverse_Tree(p->left);  // Рекурсивный обход левого поддерева
 	}
 }
@@ -124,6 +132,7 @@ tree *Create_Tree()
 	{
 		if (strlen(s) > 20) { // Проверка слова на длину и в случае длины большей 20 повторный ввод
 			printf("The string contain a word which length more than 20.Try again.\n");
+			Free_Tree(root); // Очистка уже созданных узлов в случае если длина какого-то слова больше 20
 			system("pause");
 			return NULL;
 		}
@@ -148,13 +157,13 @@ int Input_N() {
 
 	printf("Enter the level at which you want to find out the number of words: ");
 
-	if (!scanf("%lf", &k1) || k1 <= 0) { printf("The level must be an integer not equal to 0.\nTry again.\n");   while (getchar() != '\n'); return 0; }
+	if (!scanf("%lf", &k1) || k1 <= 0) { printf("The level must be an integer not equal to 0 and positive.\nTry again.\n");   while (getchar() != '\n'); return 0; }
 
-	if (getchar() != '\n') { printf("The level must be an integer not equal to 0.\nTry again.\n"); while (getchar() != '\n'); return 0; }
+	if (getchar() != '\n') { printf("The level must be an integer not equal to 0.\nTry again and positive.\n"); while (getchar() != '\n'); return 0; }
 
 	k = k1;
 
-	if (k != k1) { printf("The level must be an integer not equal to 0.\nTry again.\n"); return 0; }
+	if (k != k1) { printf("The level must be an integer not equal to 0 and positive.\nTry again.\n"); return 0; }
 
 	return k;  // В случае корректного ввода возвращаем номер уровня
 }
@@ -163,6 +172,11 @@ int PrintLevel(tree* element, int* s, int p, int level) {
 	int rec = 0;
 	if (p == 1) {  // Если этот вход первый 
 		printf("\n%d:  ", level);
+	}
+	if ((!element) && (p <= level)) { //заполнение пустых мест
+		for (int i = 0; i < pow(2, (level - p)); i++) { //вывод фраз, говорящих о пустых местах на данном уровне в зависимости от уровня, на котором встречен пустой символ
+			printf("*    ");
+		}
 	}
 	if ((element) && (p <= level)) {  // Переход на следующий уровень
 		PrintLevel(element->left, s, p + 1, level);
