@@ -17,8 +17,8 @@ typedef struct tree {  // Узел дерева
 
 tree *Add_Tree(tree *p, char *w); // Рекурсивная функция добавления узла к дереву
 void Free_Tree(tree *tree); // Рекурсивная функция удаления поддерева
-void Print_Tree(tree *p); // Рекурсивная функция вывода дерева (инфиксный обход)
-void Print_Reverse_Tree(tree *p); // Рекурсивная функция вывода дерева (постфиксный обход)
+void Print_Tree(tree *p); // Рекурсивная функция вывода элементов дерева по возрастанию
+void Print_Reverse_Tree(tree *p); // Рекурсивная функция вывода элементов дерева по убыванию
 int Check_Str(char *str); // Функция проверки ввода строки
 int Create_Textfile(); // Функция создания и заполнения текстового файла
 tree *Create_Tree(); // Функция создания дерева
@@ -26,4 +26,5 @@ int Input_N(); // Функция ввода уровня, на котором н
 int PrintLevel(tree* element, int* s, int p, int level); // Рекурсивная функция вывода определенного уровня дерева (level)
 void WidePrint(tree* first); // Функция вывода дерева по уровням (обход в ширину)
 void Task(tree *element, int p, int N, int* rec); // Рекурсивная функция задания
+void Print_Straight(tree *p); // Рекурсивная функция вывода элементов дерева при прямом обходе
 
